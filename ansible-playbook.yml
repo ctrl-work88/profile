@@ -3,25 +3,25 @@
   hosts: localhost
   tasks:
     - name: stop running container
-      command: docker stop <container name>
+      command: docker stop profile-container
       ignore_errors: yes
 
     - name: remove stopped container
-      command: docker rm <container name>
+      command: docker rm profile-container
       ignore_errors: yes
 
     - name: remove used image
-      command: docker rmi <image name>
+      command: docker rmi profile-img
       ignore_errors: yes
 
     - name: build docker image from dockerfile
       command: docker build -t profile-img .
 
     - name: create tag to image
-      command: docker tag profile img <dockerhub user/repository name>
+      command: docker tag profile-img controlwork88/profile
 
     - name: push image to dockerhub
-      command: docker push <dockerhub user/repository name>
+      command: docker push controlwork88/profile
 
     - name: run container from image
       command: docker run -d --name profile-container -p 8087:80 profile-img 
